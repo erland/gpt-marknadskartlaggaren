@@ -1,0 +1,2 @@
+# gpt-marknadskartlaggaren
+GPT Marknadskartläggaren
