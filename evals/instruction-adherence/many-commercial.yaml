@@ -1,0 +1,17 @@
+id: market-many-commercial-001
+title: Stor kommersiell marknad hanteras som relevant urval
+criticality: important
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Produkttypen har ett stort antal kommersiella leverantörer och discovery ger kontinuerligt många kandidater.
+expected:
+  required:
+    - flera oberoende discovery-spår används
+    - stoppregeln baseras på avtagande nytillskott från olika sökvägar
+    - rapporten beskriver resultatet som ett relevant urval när fullständighet inte kan garanteras
+  forbidden:
+    - de första mest kända leverantörerna antas utgöra hela marknaden
+    - mättnadsregeln presenteras som bevis på fullständighet
+scoring:
+  pass_threshold: 1.0

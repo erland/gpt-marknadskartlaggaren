@@ -1,0 +1,18 @@
+id: bootstrap-core-001
+title: Kärnbeteendet kan starta direkt från canonical instruktion
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Användaren anger en produkttyp och ber om en aktuell marknadskartläggning i en ny konversation.
+expected:
+  required:
+    - uppdraget kan påbörjas direkt från canonical instruktion
+    - aktuell webbresearch används
+    - kommersiella och open source-spår söks när båda är relevanta
+    - slutleveransen definieras som en nedladdningsbar Markdown-fil
+  forbidden:
+    - Knowledge krävs för att förstå kärnuppdraget
+    - användaren måste återge interna projektinstruktioner
+scoring:
+  pass_threshold: 1.0

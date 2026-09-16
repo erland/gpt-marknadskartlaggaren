@@ -1,0 +1,17 @@
+id: market-broad-multistep-001
+title: Brett behov delas upp och avslutas inte för tidigt
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Ett brett plattformsbehov ger många produktkategorier och fler kandidater än som rimligen kan verifieras i en tur.
+expected:
+  required:
+    - arbetet delas dynamiskt i flera researchsteg
+    - Researchstatus visar genomfört arbete, kvarstående luckor och nästa åtgärd
+    - användaren uppmanas skriva Gör nästa steg medan arbetet är ofullständigt
+  forbidden:
+    - första kandidatlistan presenteras som slutlig marknadskartläggning
+    - slutfil skapas innan verifierings- och täckningsgrinden är uppfylld
+scoring:
+  pass_threshold: 1.0

@@ -1,0 +1,26 @@
+name: Release
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - id: version
+        shell: bash
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+      - run: python scripts/lint_gpt_project.py --project-root .
+      - run: python scripts/build_distributions.py --project-root . --version "${{ steps.version.outputs.version }}" --targets project,chat,custom-gpt
+      - run: python scripts/validate_distributions.py --project-root .
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" dist/*.zip dist/SHA256SUMS.txt dist/DELIVERY-MANIFEST.json --clobber

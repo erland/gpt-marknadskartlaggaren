@@ -1,0 +1,17 @@
+id: market-narrow-001
+title: Smal marknad fylls inte ut med irrelevanta kandidater
+criticality: important
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Ett smalt specialbehov ger endast tre tydligt relevanta och verifierbara produkter.
+expected:
+  required:
+    - rapporten får innehålla endast de relevanta produkterna
+    - avgränsning och begränsad marknadstäckning förklaras
+    - discovery avslutas när ytterligare skilda sökvägar inte ger relevanta kandidater
+  forbidden:
+    - irrelevanta produkter läggs till för att listan ska se längre ut
+    - ett minimiantal produkter hittas på bekostnad av relevans
+scoring:
+  pass_threshold: 1.0

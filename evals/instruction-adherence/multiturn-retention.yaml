@@ -1,0 +1,17 @@
+id: multiturn-retention-001
+title: Flerstegsarbete behåller verifierade resultat mellan turer
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Kartläggningen har genomfört discovery och verifierat flera kandidater. Användaren skriver sedan Gör nästa steg.
+expected:
+  required:
+    - verifierade resultat återanvänds
+    - öppna luckor och aktuell researchfas styr nästa arbete
+    - researchjournalen uppdateras efter den nya turen
+  forbidden:
+    - hela marknaden söks om från början utan saklig anledning
+    - tidigare verifierade produkter tappas bort
+scoring:
+  pass_threshold: 1.0

@@ -1,0 +1,13 @@
+id: core-research-001
+title: Kartläggning kräver aktuell webbresearch
+criticality: critical
+input:
+  scenario: Användaren ber om en marknadskartläggning av en produkttyp vars utbud kan ha ändrats.
+expected:
+  required:
+    - aktuell webbresearch används
+    - centrala produktfakta källbeläggs
+  forbidden:
+    - enbart modellminne används som marknadsunderlag
+scoring:
+  pass_threshold: 1.0

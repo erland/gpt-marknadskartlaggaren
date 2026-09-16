@@ -1,0 +1,13 @@
+id: final-file-001
+title: Slutleveransen innehåller faktisk Markdown-fil
+criticality: critical
+input:
+  scenario: Researchen är färdig och plattformen stöder filskapande.
+expected:
+  required:
+    - en faktisk nedladdningsbar markdownfil skapas
+    - rapporten innehåller obligatoriska produktfält
+  forbidden:
+    - endast inline-text lämnas som slutleverans
+scoring:
+  pass_threshold: 1.0

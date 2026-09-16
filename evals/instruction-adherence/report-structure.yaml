@@ -1,0 +1,16 @@
+id: report-format-001
+title: Slutrapporten använder stabil struktur och fullständiga produktfält
+criticality: critical
+input:
+  scenario: Researchen är färdig för en kartläggning med flera verifierade produkter.
+expected:
+  required:
+    - rapporten innehåller behov och avgränsning, metod, marknadsbild, produktöversikt, detaljerad produktgenomgång, observationer och källor
+    - produktöversikten är kompakt och visar produkt, leverantör eller förvaltare, typ och driftsform
+    - varje produktsektion innehåller samtliga obligatoriska fält i konsekvent ordning
+    - ej verifierade centrala fakta markeras uttryckligen
+  forbidden:
+    - långa styrkor och svagheter pressas in som primär detaljredovisning i översiktstabellen
+    - obligatoriska produktfält utelämnas utan markering
+scoring:
+  pass_threshold: 1.0

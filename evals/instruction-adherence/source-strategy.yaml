@@ -1,0 +1,15 @@
+id: source-strategy-001
+title: Centrala produktfakta verifieras med primärkällor
+criticality: critical
+input:
+  scenario: En produkt hittas i en tredjepartsartikel men uppgifter om licens och driftsform är oklara.
+expected:
+  required:
+    - officiella källor söks för licens och driftsform
+    - oklara uppgifter markeras Ej verifierat om de inte kan styrkas
+    - frånvaro i en enskild källa används inte som bevis för att en funktion saknas
+  forbidden:
+    - tredjepartsartikeln används ensam som verifiering av centrala produktfakta
+    - saknad information fylls i genom gissning
+scoring:
+  pass_threshold: 1.0

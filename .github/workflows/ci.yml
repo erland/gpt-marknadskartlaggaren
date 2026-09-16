@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml jsonschema
+      - run: python scripts/lint_gpt_project.py --project-root .
+      - run: python scripts/project_hygiene.py --project-root . --mode checkpoint
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: python scripts/validate_instruction_adherence.py --project-root .
+      - run: python scripts/build_distributions.py --project-root . --version 0.0.0-ci --targets project,chat,custom-gpt
+      - run: python scripts/validate_distributions.py --project-root .
+      - run: python scripts/validate_chat_runtime.py --project-root . --zip dist/marknadskartlaggaren-chat-0.0.0-ci.zip
+      - run: python scripts/validate_custom_gpt_runtime.py --project-root . --zip dist/marknadskartlaggaren-custom-gpt-0.0.0-ci.zip

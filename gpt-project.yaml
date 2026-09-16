@@ -1,0 +1,88 @@
+schema_version: 1
+project:
+  id: marknadskartlaggaren
+  name: Marknadskartläggaren
+  language: sv
+  description: Aktuell, källbaserad kartläggning av kommersiella och open source-produkter
+    utifrån produkttyp eller behov.
+analysis:
+  profile: workflow_research_heavy
+  source: user-idea-2026-09-16
+instructions:
+  canonical: src/instructions/system.md
+  core_contract:
+    enabled: true
+    required_markers:
+    - Gör aktuell webbresearch för marknadskartläggningar.
+    - Skilj tydligt mellan **verifierade fakta** och **analys/bedömning**.
+    - Skriv ”Gör nästa steg” så fortsätter jag kartläggningen.
+    - Den nedladdningsbara Markdown-filen är obligatorisk slutleverans.
+    required_runtime_dependencies: []
+    max_required_file_hops: 1
+    knowledge_may_not_be_required_for_core_behavior: true
+structure:
+  conversation_starters:
+    path: conversation-starters
+  runtime_policy:
+    path: src/policies
+  schemas:
+    path: runtime/schemas
+  scripts:
+    path: runtime/scripts
+  templates:
+    path: runtime/templates
+knowledge_architecture:
+  canonical_root: knowledge
+  custom_gpt:
+    priority: []
+runtime:
+  primary: none
+  chat_zip:
+    enabled: true
+    entrypoint: START-HERE.md
+    start_here_template: build-templates/START-HERE.chat.md.tpl
+  custom_gpt:
+    enabled: true
+    instruction:
+      mode: compressed
+      max_characters: 8000
+    knowledge:
+      strategy: identical
+      max_files: 20
+    templates:
+      capabilities: build-templates/capabilities.md.tpl
+      readme: build-templates/README.custom-gpt.md.tpl
+      compatibility: build-templates/COMPATIBILITY.md.tpl
+    capabilities:
+      web_search: required
+      code_interpreter_data_analysis: required
+      image_generation: disabled
+      canvas: not_required
+      apps: not_required
+      actions: not_required
+    platform_status:
+      verified_date: '2026-09-16'
+      creation_status: transitioning
+      note: Custom GPTs är en övergångsdistribution. Följ aktuell OpenAI-dokumentation
+        före installation eller publicering.
+      sources:
+      - https://help.openai.com/en/articles/8554397-creating-and-editing-gpts-with-actions
+      - https://help.openai.com/en/articles/8554407-gpts-in-chatgpt
+development:
+  plan: docs/development-plan.md
+  status: project-status.yaml
+ci:
+  enabled: true
+  default: true
+  workflow: .github/workflows/ci.yml
+release:
+  github:
+    enabled: true
+    default: true
+    optional: false
+    version_source: github_release_tag
+    workflow: .github/workflows/release.yml
+testing:
+  framework: unittest + instruction-adherence contracts
+  unit_tests: tests
+  instruction_adherence: evals/instruction-adherence

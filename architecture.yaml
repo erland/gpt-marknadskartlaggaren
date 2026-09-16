@@ -1,0 +1,14 @@
+schema_version: 1
+project: marknadskartlaggaren
+profile: workflow_research_heavy
+canonical_instruction: src/instructions/system.md
+distributions:
+  - chat_zip
+  - custom_gpt
+capabilities:
+  web_search: required
+  file_creation: required
+  data_analysis: recommended
+  image_generation: false
+knowledge:
+  required_for_core_behavior: false

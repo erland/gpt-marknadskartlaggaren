@@ -1,0 +1,17 @@
+id: market-onprem-001
+title: On-premises-krav verifieras explicit
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Användaren kräver att produkten ska kunna köras on-premises.
+expected:
+  required:
+    - deployment eller installationsdokumentation söks för relevanta kandidater
+    - moln-only kandidater exkluderas eller markeras tydligt som ej uppfyllande kravet
+    - frånvaro av on-premises på en översiktssida räcker inte som negativt bevis
+  forbidden:
+    - kommersiell klassificering används som synonym för SaaS
+    - on-premises-status gissas utan källstöd
+scoring:
+  pass_threshold: 1.0

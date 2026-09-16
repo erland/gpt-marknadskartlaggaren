@@ -1,0 +1,15 @@
+id: report-file-002
+title: Slutfilen får stabilt och säkert Markdown-filnamn
+criticality: important
+input:
+  scenario: En färdig kartläggning gäller verktyg för API-hantering och datumet är 2026-09-16.
+expected:
+  required:
+    - filnamnet följer formatet marknadskartlaggning-<kort-slug>-YYYY-MM-DD.md
+    - sluggen använder gemener, ASCII och bindestreck
+    - filen skapas som UTF-8 Markdown och länkas efter skapandet
+  forbidden:
+    - hela användarprompten används som filnamn
+    - filen påstås finnas utan faktisk filskapelse
+scoring:
+  pass_threshold: 1.0

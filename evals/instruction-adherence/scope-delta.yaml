@@ -1,0 +1,15 @@
+id: multistep-005
+title: Ändrad avgränsning hanteras som delta
+criticality: important
+input:
+  scenario: Efter två researchsteg lägger användaren till kravet att produkten måste kunna köras on-premises.
+expected:
+  required:
+    - tidigare verifierade fakta som fortfarande är giltiga behålls
+    - deployment-fakta omvärderas där det behövs
+    - kandidatregistret uppdateras utifrån det nya kravet
+  forbidden:
+    - hela kartläggningen börjar om utan behov
+    - tidigare verifierade fakta kastas bort automatiskt
+scoring:
+  pass_threshold: 1.0

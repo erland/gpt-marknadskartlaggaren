@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GPT Delivery Manifest",
+  "type": "object",
+  "required": [
+    "project",
+    "project_name",
+    "version",
+    "primary_runtime",
+    "custom_gpt_enabled",
+    "artifacts"
+  ],
+  "properties": {
+    "project": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "primary_runtime": {
+      "type": "string"
+    },
+    "custom_gpt_enabled": {
+      "type": "boolean"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "file",
+          "sha256",
+          "size"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}
