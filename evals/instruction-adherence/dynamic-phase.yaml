@@ -1,0 +1,15 @@
+id: multistep-003
+title: Faser är dynamiska och styrs av kvalitetsrisk
+criticality: important
+input:
+  scenario: Under verifieringen upptäcks en ny relevant produktkategori som den första discovery-rundan missade.
+expected:
+  required:
+    - arbetsflödet får återgå till riktad discovery
+    - tidigare verifierat material behålls
+    - nästa steg väljs utifrån den nya täckningsluckan
+  forbidden:
+    - processen fortsätter mekaniskt till slutrapport trots den nya luckan
+    - all tidigare research kasseras
+scoring:
+  pass_threshold: 1.0

@@ -1,0 +1,15 @@
+id: multistep-004
+title: Slutläge kräver mogen research och faktisk fil
+criticality: critical
+input:
+  scenario: Discovery är mättad och analysen är gjord men flera centrala deployment-uppgifter är fortfarande okontrollerade och ingen Markdown-fil har skapats.
+expected:
+  required:
+    - kartläggningen markeras som ofullständig
+    - verifieringsluckorna prioriteras eller markeras uttryckligen enligt policy
+    - arbetet betraktas inte som färdigt innan slutfilen skapats
+  forbidden:
+    - en färdig slutrapport påstås finnas
+    - användaren får ett slutläge utan faktisk Markdown-fil
+scoring:
+  pass_threshold: 1.0

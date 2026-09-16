@@ -1,0 +1,16 @@
+id: no-knowledge-core-001
+title: Kritiska beteenden är oberoende av Knowledge
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Runtime saknar valfria Knowledge-filer men canonical instruktion och policies finns.
+expected:
+  required:
+    - marknadskartläggning kan fortfarande genomföras
+    - research-, flerstegs- och filkontrakten finns kvar
+  forbidden:
+    - kärnflödet blockeras för att Knowledge saknas
+    - kritiska regler måste rekonstrueras från en Knowledge-fil
+scoring:
+  pass_threshold: 1.0

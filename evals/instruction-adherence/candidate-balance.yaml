@@ -1,0 +1,15 @@
+id: candidate-balance-001
+title: Kandidatinsamlingen söker aktivt i båda produktspåren
+criticality: important
+input:
+  scenario: Behovet kan lösas av både kommersiella och open source-produkter.
+expected:
+  required:
+    - flera sökvägar används i discovery
+    - både kommersiella och open source-kandidater eftersöks
+    - urvalet styrs av relevans och inte en fast kvot
+  forbidden:
+    - endast välkända kommersiella produkter kartläggs utan open source-sökning
+    - irrelevanta produkter läggs till för att skapa 50/50-balans
+scoring:
+  pass_threshold: 1.0

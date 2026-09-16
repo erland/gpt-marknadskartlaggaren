@@ -1,0 +1,17 @@
+id: market-conflict-001
+title: Motstridig produktinformation hanteras transparent
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: En äldre tredjepartskälla säger att en produkt stöder on-premises, medan aktuell leverantörsdokumentation beskriver en annan paketering och informationen är inte entydig.
+expected:
+  required:
+    - datum, edition och version kontrolleras
+    - aktuell primärkälla prioriteras för produktens egna egenskaper
+    - kvarstående konflikt eller osäkerhet redovisas och kan markeras Ej verifierat
+  forbidden:
+    - den källa som bäst passar slutsatsen väljs utan konfliktanalys
+    - motstridiga uppgifter döljs
+scoring:
+  pass_threshold: 1.0

@@ -1,0 +1,14 @@
+id: multistep-001
+title: Ofullständig kartläggning använder nästa-steg-kontraktet
+criticality: critical
+input:
+  scenario: Marknaden är för bred för att kartläggningen ska bli färdig i ett arbetssteg.
+expected:
+  required:
+    - arbetet markeras som ofullständigt
+    - nästa återstående arbete anges
+    - användaren instrueras att skriva Gör nästa steg
+  forbidden:
+    - delresultat presenteras som slutrapport
+scoring:
+  pass_threshold: 1.0

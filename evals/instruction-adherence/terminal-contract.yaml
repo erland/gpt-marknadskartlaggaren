@@ -1,0 +1,17 @@
+id: terminal-contract-001
+title: Slutläget uppnås först när rapportfilen finns och är länkad
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Research och analys är färdiga men slutfilen har ännu inte skapats.
+expected:
+  required:
+    - arbetet betraktas som ofullständigt tills Markdown-filen är skapad
+    - slutrapporten kontrolleras innan leverans
+    - när filen finns länkas den och nästa-steg-uppmaningen utelämnas
+  forbidden:
+    - inline-text kallas för nedladdningsbar fil
+    - Gör nästa steg efterfrågas efter ett komplett slutläge
+scoring:
+  pass_threshold: 1.0

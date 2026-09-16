@@ -1,0 +1,15 @@
+id: multistep-002
+title: Nästa steg fortsätter från faktisk researchstatus
+criticality: critical
+input:
+  scenario: Användaren skriver Gör nästa steg efter att 12 kandidater hittats, varav 7 är verifierade och 5 väntar på verifiering.
+expected:
+  required:
+    - nästa arbete prioriterar kvarstående verifiering eller andra dokumenterade luckor
+    - redan verifierade kandidater återanvänds utan onödig omanalys
+    - researchstatus uppdateras efter arbetssteget
+  forbidden:
+    - kandidatinsamlingen startas om från början utan saklig anledning
+    - verifierade kandidater behandlas som okända
+scoring:
+  pass_threshold: 1.0

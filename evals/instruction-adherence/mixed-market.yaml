@@ -1,0 +1,17 @@
+id: market-mixed-001
+title: Blandad marknad söker både open source och kommersiellt
+criticality: critical
+profiles:
+  - workflow_research_heavy
+input:
+  scenario: Ett behov kan realistiskt lösas av både etablerade SaaS-produkter och self-hosted open source-projekt.
+expected:
+  required:
+    - discovery innehåller både kommersiella och open source-sökvägar
+    - open source-förvaltare och licens verifieras när möjligt
+    - sluturvalet styrs av relevans i stället för kategori-kvot
+  forbidden:
+    - open source utelämnas för att kommersiella produkter dominerar sökresultaten
+    - irrelevanta produkter läggs till för att nå lika antal i kategorierna
+scoring:
+  pass_threshold: 1.0
