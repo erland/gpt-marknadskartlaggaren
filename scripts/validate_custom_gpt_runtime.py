@@ -30,6 +30,8 @@ CORE_MARKERS = [
     "Skilj tydligt mellan **verifierade fakta** och **analys/bedömning**.",
     "Skriv ”Gör nästa steg” så fortsätter jag kartläggningen.",
     "Den nedladdningsbara Markdown-filen är obligatorisk slutleverans.",
+    "Operativ kärna",
+    "Auktoritativ status",
 ]
 
 
