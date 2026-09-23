@@ -39,4 +39,4 @@ python scripts/validate_instruction_adherence.py --project-root .
 
 ## GPT Byggaren 1.5
 
-Migreringen till GPT Byggaren 1.5.0 inför plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt, strukturerad researchstatus och generaliserad runtime parity. Chat och Custom GPT är de aktiva runtimes som releasekedjan bygger och verifierar.
+Migreringen till GPT Byggaren 1.5.0 är klar och verifierad. Den inför plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt, strukturerad researchstatus och generaliserad runtime parity. Chat och Custom GPT är de aktiva runtimes som releasekedjan bygger och verifierar.
