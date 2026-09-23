@@ -1,0 +1,18 @@
+schema_version: 1
+status: idle
+scope:
+  need: null
+  boundaries: []
+phase: null
+candidates: []
+verified_facts: []
+excluded_candidates: []
+research_tracks: []
+open_gaps: []
+next_action: null
+report:
+  ready: false
+  markdown_file: null
+notes:
+  - This file is a canonical state template for resumable market-mapping work.
+  - Runtime copies may update it; the project source template remains neutral.

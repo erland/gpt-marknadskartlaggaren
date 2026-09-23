@@ -1,0 +1,6 @@
+id: model-compat-resume
+scenario: En kartläggning återupptas och research-state.yaml skiljer sig från chattminnet.
+expected:
+  - strukturerad researchstatus behandlas som auktoritativ
+  - verifierad research återanvänds
+  - nästa steg härleds från faktisk status

@@ -29,6 +29,8 @@ REQUIRED_FILES = {
     "MANIFEST.json",
     "assistant/instructions.md",
     "assistant/conversation-starters.md",
+    "assistant/runtime-contract.json",
+    "research-state.yaml",
     "assistant/policies/report-policy.md",
     "assistant/policies/research-policy.md",
     "assistant/policies/workflow-policy.md",
@@ -104,6 +106,16 @@ def validate_build(build: Path) -> list[str]:
     for marker in required_markers:
         if marker not in instructions:
             errors.append(f"Canonical core marker missing from Chat runtime: {marker}")
+
+    contract_path = build / "assistant" / "runtime-contract.json"
+    if contract_path.exists():
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        if contract.get("runtime_id") != "chatgpt_chat":
+            errors.append("Chat runtime contract has wrong runtime_id")
+        if contract.get("adapter", {}).get("state_template") != "research-state.yaml":
+            errors.append("Chat runtime contract has wrong state template")
+        if contract.get("workspace_state", {}).get("state", {}).get("authority") != "workspace_file":
+            errors.append("Chat runtime contract must preserve workspace-file state authority")
 
     return errors
 

@@ -1,23 +1,33 @@
 # STATUS
 
-## Release
+## Aktuell status
 
-**Version:** 1.0.0
+**PASS – migreringen till GPT Byggaren 1.5.0 är klar.**
 
-Projektets åtta planerade utvecklingssteg är genomförda.
+Version **1.0.0** är fortsatt stabil domänbaslinje.
 
-## Slutstatus
+## Slutverifiering
 
-- Canonical instruktion och beteendekontrakt: klart.
-- Research- och källstrategi: klart.
-- Flerstegsflöde med researchjournal: klart.
-- Markdown-rapport och filgenereringskontrakt: klart.
-- 21 instruction-adherence-evals och deterministiska kontraktstester: klart.
-- Chat ZIP-runtime: minimerad och separat validerad.
-- Custom GPT-runtime: kompilerad, capability-dokumenterad och separat validerad.
-- CI och release-workflow: aktiverade.
-- Slutlig releaseversion: 1.0.0.
+- steg 1–12 verifierade,
+- lint och project hygiene: PASS,
+- unit tests och 21 instruction-adherence-evals: PASS,
+- Chat ZIP och Custom GPT: PASS,
+- runtime parity för fem registrerade runtimes: PASS,
+- release-readiness: PASS,
+- CI/release workflow parity: PASS,
+- delivery manifest, checksummor och ZIP-integritet: PASS.
 
-## Releasegrindar
+## Runtime-status
 
-Release 1.0.0 ska endast betraktas som färdig när lint, tester, eval-kontrakt, final project hygiene, distributionsvalidering, Chat-runtimevalidering och Custom GPT-runtimevalidering passerar från ett rent källträd.
+Aktiva:
+- ChatGPT Chat
+- ChatGPT Custom
+
+Bedömda men inaktiva tills research-, state- och filslutleveransparitet verifierats:
+- Claude Projects
+- OpenCode
+- OpenAI Plugin
+
+## Nästa utvecklingsområde
+
+Inga blockerande migrationssteg återstår. Fortsatt produktutveckling kan styras av verklig användning och nya behov.

@@ -1,0 +1,6 @@
+id: model-compat-source-conflict
+scenario: Leverantörssida och annan aktuell källa ger motstridiga uppgifter om driftform eller licens.
+expected:
+  - konflikten prioriteras före slutrapport
+  - datum version och edition kontrolleras
+  - kvarstående osäkerhet markeras tydligt

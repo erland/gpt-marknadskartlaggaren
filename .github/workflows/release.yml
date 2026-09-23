@@ -12,15 +12,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install pyyaml
+      - run: pip install pyyaml jsonschema
       - id: version
         shell: bash
         run: |
           TAG="${{ github.event.release.tag_name }}"
           echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
       - run: python scripts/lint_gpt_project.py --project-root .
+      - run: python scripts/project_hygiene.py --project-root . --mode checkpoint
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: python scripts/validate_instruction_adherence.py --project-root .
       - run: python scripts/build_distributions.py --project-root . --version "${{ steps.version.outputs.version }}" --targets project,chat,custom-gpt
       - run: python scripts/validate_distributions.py --project-root .
+      - run: python scripts/validate_chat_runtime.py --project-root . --zip dist/marknadskartlaggaren-chat-${{ steps.version.outputs.version }}.zip
+      - run: python scripts/validate_custom_gpt_runtime.py --project-root . --zip dist/marknadskartlaggaren-custom-gpt-${{ steps.version.outputs.version }}.zip
+      - run: python scripts/validate_runtime_parity.py --project-root .
+      - run: python scripts/validate_release_readiness.py --project-root .
+      - run: python scripts/validate_workflow_parity.py --project-root .
       - env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "${{ github.event.release.tag_name }}" dist/*.zip dist/SHA256SUMS.txt dist/DELIVERY-MANIFEST.json --clobber
