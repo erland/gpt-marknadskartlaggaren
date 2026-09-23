@@ -1,23 +1,24 @@
 # STATUS
 
-## Release
+## Aktuell status
 
-**Version:** 1.0.0
+**PÅGÅR – migrering till GPT Byggaren 1.5.0, steg 9.**
 
-Projektets åtta planerade utvecklingssteg är genomförda.
+Version **1.0.0** är fortsatt stabil baslinje.
 
-## Slutstatus
+## Aktuellt migrationssteg
 
-- Canonical instruktion och beteendekontrakt: klart.
-- Research- och källstrategi: klart.
-- Flerstegsflöde med researchjournal: klart.
-- Markdown-rapport och filgenereringskontrakt: klart.
-- 21 instruction-adherence-evals och deterministiska kontraktstester: klart.
-- Chat ZIP-runtime: minimerad och separat validerad.
-- Custom GPT-runtime: kompilerad, capability-dokumenterad och separat validerad.
-- CI och release-workflow: aktiverade.
-- Slutlig releaseversion: 1.0.0.
+**Steg 9 – GPT Byggaren 1.5-kontrakt och modellrobust state**
 
-## Releasegrindar
+- plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt införda,
+- stateful/research-heavy profil definierad,
+- `research-state.yaml` definierad som auktoritativ researchstatus när den finns,
+- konversationsjournal behålls som fallback,
+- operativ kärna tillagd i canonical instruktion,
+- fyra modellkompatibilitetsscenarier tillagda,
+- fem registrerade runtimes bedömda,
+- Chat och Custom GPT kvar som aktiva mål.
 
-Release 1.0.0 ska endast betraktas som färdig när lint, tester, eval-kontrakt, final project hygiene, distributionsvalidering, Chat-runtimevalidering och Custom GPT-runtimevalidering passerar från ett rent källträd.
+## Nästa rekommenderade steg
+
+**9 – slutför först när befintlig CI har verifierat att release 1.0.0-beteendet inte har regresserat.**
