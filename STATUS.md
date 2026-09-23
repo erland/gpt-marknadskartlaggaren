@@ -2,23 +2,22 @@
 
 ## Aktuell status
 
-**PÅGÅR – migrering till GPT Byggaren 1.5.0, steg 10.**
+**PÅGÅR – migrering till GPT Byggaren 1.5.0, steg 11.**
 
-Version **1.0.0** är fortsatt stabil baslinje. Steg 9 är verifierat utan regression i research-, eval- eller distributionsflödet.
+Version **1.0.0** är fortsatt stabil baslinje. Steg 9–10 är verifierade utan regression i research-, eval- eller distributionsflödet.
 
-## Verifierat i steg 9
+## Verifierat i steg 10
 
-- plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt,
-- stateful/research-heavy modellrobust profil,
-- canonical `research-state.yaml`-template,
-- operativ kärna och auktoritativ statusregel,
-- fyra modellkompatibilitetsscenarier,
-- bedömning av fem registrerade runtimes,
-- canonical instruktion: 7 851 tecken,
-- full befintlig CI-kedja: PASS.
+- Chat ZIP innehåller genererat 1.5-runtime-kontrakt,
+- Custom GPT innehåller genererat 1.5-runtime-kontrakt,
+- båda distributionerna innehåller neutral `research-state.yaml`-template,
+- Chat bevarar workspace-file state authority,
+- Custom GPT dokumenterar conversation/file fallback,
+- runtime-validatorerna blockerar state- eller kontraktsdrift,
+- full CI-kedja: PASS.
 
 ## Nästa rekommenderade steg
 
-**10 – Anpassa distributionerna till 1.5.**
+**11 – Generaliserad runtime parity och release readiness.**
 
-Chat och Custom GPT ska få explicita runtime-kontrakt och paketera state-/artifact-kontrakten. Claude Projects, OpenCode och OpenAI Plugin förblir bedömda men inaktiva tills webbresearch och faktisk filslutleverans kan verifieras.
+Alla fem registrerade runtimes ska bedömas i samma 1.5-paritetsmodell. Chat och Custom GPT är aktiva; Claude Projects, OpenCode och OpenAI Plugin ska fortsatt vara explicit bedömda och inaktiva tills webbresearch och faktisk filslutleverans kan verifieras.
