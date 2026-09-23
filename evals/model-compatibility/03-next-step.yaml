@@ -1,0 +1,7 @@
+id: model-compat-next-step
+scenario: Användaren säger Gör nästa steg i en ofärdig kartläggning.
+expected:
+  - kartläggningen startas inte om
+  - blockerare och verifieringsluckor prioriteras
+  - exakt ett avgränsat nästa researchmål väljs
+  - researchstatus uppdateras efter delsteget
