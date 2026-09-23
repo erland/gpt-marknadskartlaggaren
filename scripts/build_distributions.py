@@ -108,6 +108,26 @@ def write_manifest(root: Path, runtime_id: str, version: str, entrypoint: str | 
     )
 
 
+def runtime_contract(cfg: dict, runtime_id: str, adapter: dict) -> dict:
+    return {
+        "schema_version": 1,
+        "runtime_id": runtime_id,
+        "capabilities": cfg.get("capabilities", {}),
+        "artifacts": cfg.get("artifacts", {}),
+        "workspace_state": cfg.get("workspace_state", {}),
+        "tools": cfg.get("tools", {}),
+        "adapter": adapter,
+    }
+
+
+def write_runtime_contract(path: Path, cfg: dict, runtime_id: str, adapter: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(runtime_contract(cfg, runtime_id, adapter), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
 def build_chat(root: Path, cfg: dict, build_root: Path, version: str) -> Path:
     out = build_root / "chat"
     ensure_clean_dir(out)
@@ -118,6 +138,21 @@ def build_chat(root: Path, cfg: dict, build_root: Path, version: str) -> Path:
 
     instr_src = root / cfg["instructions"]["canonical"]
     copy_file(instr_src, assistant / "instructions.md")
+
+    state_src = root / cfg["workspace_state"]["state"]["path"]
+    copy_file(state_src, out / "research-state.yaml")
+    write_runtime_contract(
+        assistant / "runtime-contract.json",
+        cfg,
+        "chatgpt_chat",
+        {
+            "mode": "chat_zip",
+            "instructions": "assistant/instructions.md",
+            "state_template": "research-state.yaml",
+            "web_research_required": True,
+            "file_delivery_required": True,
+        },
+    )
 
     starters_root = root / cfg["structure"]["conversation_starters"]["path"]
     if starters_root.exists():
@@ -244,6 +279,22 @@ def build_custom(root: Path, cfg: dict, build_root: Path, version: str) -> Path:
     core_markers = list(cfg.get("instructions", {}).get("core_contract", {}).get("required_markers", []) or [])
     compiled_instr = compile_custom_instruction(instr, mode, max_chars, core_markers)
     (builder / "instructions.md").write_text(compiled_instr, encoding="utf-8")
+
+    state_src = root / cfg["workspace_state"]["state"]["path"]
+    copy_file(state_src, builder / "research-state.yaml")
+    write_runtime_contract(
+        builder / "runtime-contract.json",
+        cfg,
+        "chatgpt_custom",
+        {
+            "mode": "custom_gpt",
+            "instructions": "builder/instructions.md",
+            "state_template": "builder/research-state.yaml",
+            "web_research_required": True,
+            "file_delivery_required": True,
+            "state_persistence": "conversation_or_file",
+        },
+    )
 
     starters_root = root / cfg["structure"]["conversation_starters"]["path"]
     starters = [p for p in starters_root.rglob("*") if p.is_file() and p.name != "README.md"] if starters_root.exists() else []
