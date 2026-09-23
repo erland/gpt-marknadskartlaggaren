@@ -7,8 +7,8 @@ plan:
   total_steps: 12
 progress:
   current_phase: migration-1.5
-  current_step: 10
-  last_completed_step: 9
+  current_step: 11
+  last_completed_step: 10
   completed_steps:
   - 1
   - 2
@@ -19,6 +19,7 @@ progress:
   - 7
   - 8
   - 9
+  - 10
   skipped_steps: []
   inserted_steps:
   - 9
@@ -30,9 +31,9 @@ state:
   blocking_issues: []
   warnings: []
 next_step:
-  recommended: 10
-  title: Anpassa distributionerna till 1.5
-  reason: Steg 9 är fullt CI-verifierat. Nästa steg är att paketera runtime-kontrakt och strukturerad researchstatus i de aktiva distributionerna.
+  recommended: 11
+  title: Generaliserad runtime parity och release readiness
+  reason: Steg 10 är CI-verifierat. Nästa steg är att generalisera runtime parity och release readiness till GPT Byggaren 1.5-modellen.
 resume:
   supported: true
   required_files:
@@ -41,4 +42,4 @@ resume:
   - docs/development-plan.md
   - STATUS.md
   - PROJECT.md
-  human_readable_status: Steg 1–9 är verifierade. Migrering till GPT Byggaren 1.5.0 fortsätter med distributionsanpassning i steg 10.
+  human_readable_status: Steg 1–10 är verifierade. Migrering till GPT Byggaren 1.5.0 fortsätter med generaliserad runtime parity i steg 11.
