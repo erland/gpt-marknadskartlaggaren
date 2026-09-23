@@ -220,3 +220,50 @@ Bildgenerering behövs inte.
 - runtime-paritet bedöms,
 - final project hygiene passerar,
 - kompletta releaseartefakter kan byggas.
+
+
+---
+
+## Steg 9 – GPT Byggaren 1.5-kontrakt och modellrobust state
+
+**Mål:** Migrera canonical projektkontrakt till GPT Byggaren 1.5.0 utan att ändra marknadskartläggningsmetoden.
+
+**Leveranser:**
+- capability-, artifact-, workspace/state- och tool-kontrakt,
+- stateful modellrobust profil,
+- `research-state.yaml` som mål för auktoritativ flerstegsstatus,
+- operativ kärna och fallback till konversationsjournal,
+- fyra modellkompatibilitetsscenarier,
+- bedömning av fem registrerade runtimes.
+
+**Klart när:**
+- befintlig CI är grön,
+- Custom GPT håller sig under 8 000 tecken,
+- inga kärnregler eller evals regresserar.
+
+### Steg 10 – Anpassa distributionerna till 1.5
+
+**Mål:** Paketera aktiva runtimes med explicita runtime-kontrakt och stöd för strukturerad researchstatus.
+
+**Klart när:**
+- Chat och Custom GPT innehåller 1.5-runtime-kontrakt,
+- Custom GPT-kompileringen verifierar 1.5-kärnan,
+- state-/artifact-kontrakten är representerade i distributionerna.
+
+### Steg 11 – Generaliserad runtime parity och release readiness
+
+**Mål:** Utöka paritet från två distributioner till fem registrerade peer candidates.
+
+**Klart när:**
+- Chat och Custom GPT är verifierade aktiva runtimes,
+- Claude Projects, OpenCode och OpenAI Plugin har explicit suitability och aktiveringsstatus,
+- release-readiness blockerar vid oavsiktlig runtime-drift.
+
+### Steg 12 – Slutvalidera migreringen och releasekedjan
+
+**Mål:** Verifiera full regression, CI/release-paritet och releaseartefakter.
+
+**Klart när:**
+- samtliga aktiva distributions- och releasegates passerar,
+- dokumentationen beskriver 1.5-arkitekturen,
+- projektet är redo att mergeas.
