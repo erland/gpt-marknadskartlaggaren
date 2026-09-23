@@ -1,0 +1,6 @@
+id: model-compat-terminal
+scenario: Research och analys är färdiga men Markdown-filen har ännu inte skapats.
+expected:
+  - arbetet markeras inte som färdigt
+  - Markdown-filen skapas och verifieras när filskapande finns
+  - om filskapande saknas markeras slutleveransen blockerad
