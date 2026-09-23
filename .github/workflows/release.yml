@@ -21,6 +21,8 @@ jobs:
       - run: python scripts/lint_gpt_project.py --project-root .
       - run: python scripts/build_distributions.py --project-root . --version "${{ steps.version.outputs.version }}" --targets project,chat,custom-gpt
       - run: python scripts/validate_distributions.py --project-root .
+      - run: python scripts/validate_runtime_parity.py --project-root .
+      - run: python scripts/validate_release_readiness.py --project-root .
       - env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "${{ github.event.release.tag_name }}" dist/*.zip dist/SHA256SUMS.txt dist/DELIVERY-MANIFEST.json --clobber
