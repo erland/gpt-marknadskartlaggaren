@@ -18,6 +18,8 @@ REQUIRED_FILES = {
     "builder/conversation-starters.md",
     "builder/capabilities.md",
     "builder/compilation-report.json",
+    "builder/runtime-contract.json",
+    "builder/research-state.yaml",
 }
 
 FORBIDDEN_TOP_LEVEL = {
@@ -92,6 +94,16 @@ def validate_build(root: Path, build: Path) -> list[str]:
         knowledge = report.get("knowledge", {})
         if knowledge.get("selected_files") != len(knowledge_files):
             errors.append("Compilation report knowledge count does not match package")
+
+    contract_path = build / "builder" / "runtime-contract.json"
+    if contract_path.exists():
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        if contract.get("runtime_id") != "chatgpt_custom":
+            errors.append("Custom GPT runtime contract has wrong runtime_id")
+        if contract.get("adapter", {}).get("state_template") != "builder/research-state.yaml":
+            errors.append("Custom GPT runtime contract has wrong state template")
+        if contract.get("adapter", {}).get("state_persistence") != "conversation_or_file":
+            errors.append("Custom GPT runtime must document conversation/file state fallback")
 
     compat_path = build / "COMPATIBILITY.md"
     if compat_path.exists():
