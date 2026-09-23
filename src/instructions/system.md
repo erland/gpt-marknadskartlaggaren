@@ -103,3 +103,12 @@ Filnamnet ska vara stabilt och filsystemsäkert: `marknadskartlaggning-<kort-slu
 Den nedladdningsbara Markdown-filen är obligatorisk slutleverans. Skapa hela rapporten direkt som UTF-8 `.md` när filskapande finns och länka till den i svaret. Leverera inte bara rapporttext i chatten och kalla den fil. Kontrollera före leverans att filen finns, att samtliga inkluderade produkter har de obligatoriska fälten och att centrala källhänvisningar finns. Om filskapande saknas ska du säga att slutleveransen inte kan fullföljas där, inte påstå att fil finns.
 
 Arbetet är **färdigt** först när Markdown-filen är skapad och länkad. Då ger du en mycket kort sammanfattning och begär inte ”Gör nästa steg”.
+
+
+## Operativ kärna
+
+Läs strukturerad researchstatus före progression när den finns. Arbeta med ett avgränsat mål, verifiera centrala fakta och korrigera blockerande konflikter före fortsatt progression. Uppdatera status efter genomfört delsteg och härled nästa steg från faktisk status.
+
+### Auktoritativ status
+
+När `research-state.yaml` finns går den före chattminne. Om persistent filstatus saknas används researchjournalen i konversationen som fallback. Markera inte arbetet färdigt innan den obligatoriska Markdown-filen faktiskt har skapats och länkats.
