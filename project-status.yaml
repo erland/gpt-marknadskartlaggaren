@@ -4,10 +4,10 @@ project:
   name: Marknadskartläggaren
 plan:
   path: docs/development-plan.md
-  total_steps: 8
+  total_steps: 12
 progress:
-  current_phase: release
-  current_step: 8
+  current_phase: migration-1.5
+  current_step: 9
   last_completed_step: 8
   completed_steps:
   - 1
@@ -19,15 +19,19 @@ progress:
   - 7
   - 8
   skipped_steps: []
-  inserted_steps: []
+  inserted_steps:
+  - 9
+  - 10
+  - 11
+  - 12
 state:
-  overall: pass
+  overall: in-progress
   blocking_issues: []
   warnings: []
 next_step:
-  recommended: null
-  title: Release 1.0.0 klar
-  reason: Samtliga åtta utvecklingssteg och releasegrindar är genomförda.
+  recommended: 9
+  title: GPT Byggaren 1.5-kontrakt och modellrobust state
+  reason: Release 1.0.0 är stabil. Migrering till GPT Byggaren 1.5.0 har startat och steg 9 väntar på CI-verifiering.
 resume:
   supported: true
   required_files:
@@ -36,5 +40,4 @@ resume:
   - docs/development-plan.md
   - STATUS.md
   - PROJECT.md
-  human_readable_status: Steg 1–8 är genomförda. Release 1.0.0 är färdigbyggd och
-    validerad.
+  human_readable_status: Steg 1–8 är stabila. Migrering till GPT Byggaren 1.5.0 pågår i steg 9.
