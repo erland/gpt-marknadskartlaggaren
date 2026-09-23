@@ -2,22 +2,23 @@
 
 ## Aktuell status
 
-**PÅGÅR – migrering till GPT Byggaren 1.5.0, steg 11.**
+**PÅGÅR – migrering till GPT Byggaren 1.5.0, steg 12.**
 
-Version **1.0.0** är fortsatt stabil baslinje. Steg 9–10 är verifierade utan regression i research-, eval- eller distributionsflödet.
+Version **1.0.0** är fortsatt stabil baslinje. Steg 9–11 är verifierade utan regression i research-, eval-, distributions- eller releaseflödet.
 
-## Verifierat i steg 10
+## Verifierat i steg 11
 
-- Chat ZIP innehåller genererat 1.5-runtime-kontrakt,
-- Custom GPT innehåller genererat 1.5-runtime-kontrakt,
-- båda distributionerna innehåller neutral `research-state.yaml`-template,
-- Chat bevarar workspace-file state authority,
-- Custom GPT dokumenterar conversation/file fallback,
-- runtime-validatorerna blockerar state- eller kontraktsdrift,
+- runtime parity omfattar alla fem registrerade runtimes,
+- paritetskategorier: behavior, capability, artifact, workspace_state och tool,
+- Chat och Custom GPT är aktiva,
+- Claude Projects, OpenCode och OpenAI Plugin är explicit bedömda som reducerade och inaktiva,
+- djup parity verifierar canonical/core markers, runtime-kontrakt och research-state-template,
+- release-readiness verifierar migrationsstatus, delivery manifest, checksummor och ZIP-integritet,
+- parity/readiness är blockerande i både CI och release,
 - full CI-kedja: PASS.
 
 ## Nästa rekommenderade steg
 
-**11 – Generaliserad runtime parity och release readiness.**
+**12 – Slutvalidera migreringen och releasekedjan.**
 
-Alla fem registrerade runtimes ska bedömas i samma 1.5-paritetsmodell. Chat och Custom GPT är aktiva; Claude Projects, OpenCode och OpenAI Plugin ska fortsatt vara explicit bedömda och inaktiva tills webbresearch och faktisk filslutleverans kan verifieras.
+Kontrollera full regression, CI/release-paritet, releaseartefakter och dokumentation innan migreringen markeras klar.
