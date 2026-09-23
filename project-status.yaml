@@ -7,8 +7,8 @@ plan:
   total_steps: 12
 progress:
   current_phase: migration-1.5
-  current_step: 9
-  last_completed_step: 8
+  current_step: 10
+  last_completed_step: 9
   completed_steps:
   - 1
   - 2
@@ -18,6 +18,7 @@ progress:
   - 6
   - 7
   - 8
+  - 9
   skipped_steps: []
   inserted_steps:
   - 9
@@ -29,9 +30,9 @@ state:
   blocking_issues: []
   warnings: []
 next_step:
-  recommended: 9
-  title: GPT Byggaren 1.5-kontrakt och modellrobust state
-  reason: Release 1.0.0 är stabil. Migrering till GPT Byggaren 1.5.0 har startat och steg 9 väntar på CI-verifiering.
+  recommended: 10
+  title: Anpassa distributionerna till 1.5
+  reason: Steg 9 är fullt CI-verifierat. Nästa steg är att paketera runtime-kontrakt och strukturerad researchstatus i de aktiva distributionerna.
 resume:
   supported: true
   required_files:
@@ -40,4 +41,4 @@ resume:
   - docs/development-plan.md
   - STATUS.md
   - PROJECT.md
-  human_readable_status: Steg 1–8 är stabila. Migrering till GPT Byggaren 1.5.0 pågår i steg 9.
+  human_readable_status: Steg 1–9 är verifierade. Migrering till GPT Byggaren 1.5.0 fortsätter med distributionsanpassning i steg 10.
