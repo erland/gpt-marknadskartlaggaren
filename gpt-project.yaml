@@ -155,7 +155,7 @@ tools:
 
 workflow:
   mode: explicit_state_machine
-  policy: src/runtime-policy/operational-execution-policy.md
+  policy: src/policies/operational-execution-policy.md
   current_state_source: project-status.yaml
   execution_rule: one_state_or_bounded_goal_per_step
   operational_core:
