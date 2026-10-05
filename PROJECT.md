@@ -6,7 +6,7 @@ Skapa en GPT som från en produkttyp eller ett behov genomför en aktuell och k�
 
 ## Distributioner
 
-Projektet byggs för både Chat ZIP och Custom GPT från samma canonical instruktion.
+Projektet byggs för Chat ZIP, Custom GPT och OpenAI Plugin från samma canonical instruktion.
 
 ## Kärnkrav
 
@@ -25,10 +25,12 @@ Projektet är stateful/research-heavy. För längre kartläggningar används `re
 Aktiva runtimes:
 - ChatGPT Chat
 - ChatGPT Custom
+- OpenAI Plugin – skills-first, ready_runtime_dependent
 
 Bedömda men inaktiva tills research-, state- och filslutleveransparitet verifierats:
 - Claude Projects
 - OpenCode
-- OpenAI Plugin
+
+OpenAI Plugin kräver hoststöd för aktuell webbresearch, skrivbar filyta, code execution och persistent state. Utan persistent state får session-local research fortsätta med journalfallback, men robust cross-session resume får inte påstås.
 
 Releasekedjan verifierar behavior, capability, artifact, workspace_state och tool samt blockerar vid runtime- eller workflow-drift.
