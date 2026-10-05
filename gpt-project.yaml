@@ -266,6 +266,7 @@ build:
   build_plugin_zip: true
 
 runtime_parity:
+  model: runtime-parity.yaml
   registered_runtimes:
   - chatgpt_chat
   - chatgpt_custom
