@@ -390,6 +390,96 @@ def build_custom(root: Path, cfg: dict, build_root: Path, version: str) -> Path:
     return out
 
 
+def build_plugin(root: Path, cfg: dict, build_root: Path, version: str) -> Path:
+    out = build_root / "plugin"
+    ensure_clean_dir(out)
+    skill = out / "skills" / "marknadskartlaggaren"
+    refs = skill / "references" / "policies"
+    assets = skill / "assets"
+    refs.mkdir(parents=True)
+    assets.mkdir(parents=True)
+
+    canonical = (root / cfg["instructions"]["canonical"]).read_text(encoding="utf-8").strip()
+    policy_root = root / cfg["structure"]["runtime_policy"]["path"]
+    policy_lines = []
+    for p in sorted(policy_root.rglob("*.md")):
+        rel = p.relative_to(policy_root)
+        copy_file(p, refs / rel)
+        policy_lines.append(f"- references/policies/{rel.as_posix()}")
+
+    state_src = root / cfg["workspace_state"]["state"]["path"]
+    copy_file(state_src, assets / "research-state.yaml")
+    report_src = root / cfg["structure"]["templates"]["path"] / "market-map-report.md"
+    copy_file(report_src, assets / "market-map-report.md")
+
+    skill_text = (
+        "---\n"
+        "name: marknadskartlaggaren\n"
+        "description: Aktuell, källbaserad marknadskartläggning av kommersiella och open source-produkter med resumable research och nedladdningsbar Markdown-rapport.\n"
+        "metadata:\n"
+        "  source: generated-from-canonical-project\n"
+        "---\n\n"
+        "# Marknadskartläggaren\n\n"
+        "## Runtime adapter\n\n"
+        "- Aktuell marknadskartläggning kräver faktisk webbresearch från hosten. Utan webbförmåga ska researchuppdraget blockeras; ersätt inte med modellminne.\n"
+        "- Skapa en arbetskopia av assets/research-state.yaml i hostens skrivbara workspace för flerstegsarbete. När arbetskopian finns är den auktoritativ framför chattminne.\n"
+        "- Uppdatera persistent research-state efter varje genomfört större researchsteg. Konversationsjournalen är fallback endast när persistent filstatus saknas.\n"
+        "- Påstå inte robust cross-session resume om hosten inte bevarar workspace/state mellan sessioner.\n"
+        "- Skrivbar filyta och code execution krävs för obligatorisk slutleverans. Utan dem får arbetet inte markeras färdigt och ingen Markdown-fil får påstås vara skapad.\n"
+        "- Använd assets/market-map-report.md som strukturstöd för slutrapporten när lämpligt.\n"
+        "- Pluginen innehåller inga runtime-skript eller custom tools och genererar ingen MCP-wrapper.\n\n"
+        "## Canonical behavior\n\n"
+        + canonical
+        + "\n\n## References\n\n"
+        + "\n".join(policy_lines)
+        + "\n\n## Assets\n\n- assets/research-state.yaml\n- assets/market-map-report.md\n"
+    )
+    (skill / "SKILL.md").write_text(skill_text, encoding="utf-8")
+
+    (out / "plugin.json").write_text(
+        json.dumps({
+            "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+            "name": "marknadskartlaggaren",
+            "version": version,
+            "description": "Aktuell källbaserad marknadskartläggning med resumable state och Markdown-slutrapport.",
+        }, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    write_runtime_contract(
+        out / "runtime-contract.json",
+        cfg,
+        "openai_plugin",
+        {
+            "mode": "skills_first",
+            "compatibility": "ready_runtime_dependent",
+            "entrypoint": "skills/marknadskartlaggaren/SKILL.md",
+            "web_research": "required_host_runtime",
+            "filesystem_read": "required_host_runtime",
+            "filesystem_write": "required_host_runtime",
+            "code_execution": "required_host_runtime",
+            "persistent_state": "required_host_runtime",
+            "state_template": "skills/marknadskartlaggaren/assets/research-state.yaml",
+            "state_authority": "workspace_file_when_present",
+            "conversation_fallback": True,
+            "mcp_generated": False,
+            "script_resources": [],
+            "fallback_policy": {
+                "without_web": "block_current_market_research_do_not_use_model_memory_as_substitute",
+                "without_persistent_state": "allow_session_journal_only_do_not_claim_cross_session_resume",
+                "without_file_write_or_code_execution": "do_not_mark_complete_or_claim_markdown_file_created",
+            },
+        },
+    )
+    (out / "README.md").write_text(
+        f"# {cfg['project']['name']} – OpenAI Plugin {version}\n\n"
+        "Skills-first peer-runtime med ready_runtime_dependent parity. Webbresearch, skrivbar filyta, code execution och persistent state är hostberoenden. "
+        "Policies paketeras som references; research-state och rapportmall som assets. Inga runtime-skript eller MCP-wrapper ingår.\n",
+        encoding="utf-8",
+    )
+    (out / "VERSION").write_text(version + "\n", encoding="utf-8")
+    write_manifest(out, cfg["project"]["id"] + "-plugin", version, "plugin.json")
+    return out
+
 def project_files(root: Path) -> list[Path]:
     excluded_top = {"build", "dist", ".git"}
     result = []
@@ -424,6 +514,8 @@ def write_delivery_manifest(dist: Path, cfg: dict, version: str) -> None:
                 artifact_type = "chat_zip"
             elif "-custom-gpt-" in p.name:
                 artifact_type = "custom_gpt_zip"
+            elif "-plugin-" in p.name:
+                artifact_type = "plugin_zip"
             else:
                 artifact_type = "zip"
         elif p.name == "SHA256SUMS.txt":
@@ -454,7 +546,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", default=".")
     parser.add_argument("--version", default="0.0.0-dev")
-    parser.add_argument("--targets", default="project,chat,custom-gpt")
+    parser.add_argument("--targets", default="project,chat,custom-gpt,plugin")
     args = parser.parse_args()
 
     root = Path(args.project_root).resolve()
@@ -477,6 +569,11 @@ def main() -> int:
         custom_root = build_custom(root, cfg, build_root, version)
         custom_zip = dist / f"{project_id}-custom-gpt-{version}.zip"
         stable_write_zip(custom_zip, custom_root, [p for p in custom_root.rglob("*") if p.is_file()])
+
+    if "plugin" in targets and cfg.get("runtime", {}).get("openai_plugin", {}).get("enabled"):
+        plugin_root = build_plugin(root, cfg, build_root, version)
+        plugin_zip = dist / f"{project_id}-plugin-{version}.zip"
+        stable_write_zip(plugin_zip, plugin_root, [p for p in plugin_root.rglob("*") if p.is_file()])
 
     if "project" in targets:
         project_zip = dist / f"{project_id}-project.zip"
