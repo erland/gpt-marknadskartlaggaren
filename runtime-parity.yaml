@@ -1,0 +1,36 @@
+schema_version: 1
+reference: canonical_contract
+registered_runtimes:
+  - chatgpt_chat
+  - chatgpt_custom
+  - claude_project
+  - opencode
+  - openai_plugin
+compared_categories:
+  - behavior
+  - capability
+  - artifact
+  - workspace_state
+  - tool
+runtimes:
+  chatgpt_chat:
+    suitability: ready
+    active: true
+  chatgpt_custom:
+    suitability: reduced
+    active: true
+  claude_project:
+    suitability: reduced
+    active: false
+  opencode:
+    suitability: reduced
+    active: false
+  openai_plugin:
+    suitability: ready
+    active: true
+    compatibility: ready_runtime_dependent
+notes:
+  - OpenAI Plugin is skills-first and carries canonical behavior, runtime policies, research-state template and report template.
+  - Web research, writable filesystem, code execution and persistent state are required host dependencies for full plugin behavior.
+  - Without persistent state, session-local research may continue but cross-session resume parity must not be claimed.
+  - Without file creation capability, the mandatory Markdown final delivery cannot be completed.
