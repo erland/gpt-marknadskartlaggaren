@@ -13,6 +13,7 @@ REQUIRED_SHARED = [
     "python scripts/validate_distributions.py --project-root .",
     "python scripts/validate_runtime_parity.py --project-root .",
     "python scripts/validate_release_readiness.py --project-root .",
+    "python scripts/verify_reproducible_build.py",
 ]
 
 
@@ -27,7 +28,7 @@ def validate(root: Path) -> list[str]:
         if command not in release:
             errors.append(f"Release missing shared gate: {command}")
 
-    ci_target = "--targets project,chat,custom-gpt"
+    ci_target = "--targets project,chat,custom-gpt,plugin"
     if ci_target not in ci or ci_target not in release:
         errors.append("CI and release must build the same active targets")
 
