@@ -56,6 +56,29 @@ class ProjectContractTests(unittest.TestCase):
     def test_eval_schema_is_valid_json(self):
         json.loads((ROOT / "schemas" / "eval-case.schema.json").read_text(encoding="utf-8"))
 
+    def test_openai_plugin_is_active_stateful_peer_runtime(self):
+        cfg = yaml.safe_load((ROOT / "gpt-project.yaml").read_text(encoding="utf-8"))
+        candidates = {item["runtime_id"]: item for item in cfg["analysis"]["runtime"]["candidates"]}
+        plugin_candidate = candidates["openai_plugin"]
+        self.assertEqual(plugin_candidate["suitability"], "ready")
+        self.assertTrue(plugin_candidate["activate_by_default"])
+        plugin = cfg["runtime"]["openai_plugin"]
+        self.assertTrue(plugin["enabled"])
+        self.assertEqual(plugin["mode"], "skills_first")
+        self.assertEqual(plugin["compatibility"], "ready_runtime_dependent")
+        self.assertEqual(plugin["web_dependency"], "required_host_runtime")
+        self.assertEqual(plugin["persistent_state"], "required_host_runtime")
+        self.assertFalse(plugin["mcp_generated"])
+        self.assertEqual(plugin["script_resources"], "none")
+        self.assertTrue(cfg["build"]["build_plugin_zip"])
+
+    def test_runtime_parity_model_exists_and_marks_plugin_ready(self):
+        parity = yaml.safe_load((ROOT / "runtime-parity.yaml").read_text(encoding="utf-8"))
+        plugin = parity["runtimes"]["openai_plugin"]
+        self.assertEqual(plugin["suitability"], "ready")
+        self.assertTrue(plugin["active"])
+        self.assertEqual(plugin["compatibility"], "ready_runtime_dependent")
+
 
 if __name__ == "__main__":
     unittest.main()
