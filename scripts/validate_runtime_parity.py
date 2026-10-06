@@ -29,8 +29,13 @@ def validate(root: Path) -> dict:
     errors: list[str] = []
 
     parity = cfg.get("runtime_parity", {})
+    parity_model = yaml.safe_load((root / "runtime-parity.yaml").read_text(encoding="utf-8"))
     registered = set(parity.get("registered_runtimes", []))
     categories = set(parity.get("compared_categories", []))
+    if set(parity_model.get("registered_runtimes", [])) != EXPECTED_RUNTIMES:
+        errors.append("runtime-parity.yaml registered runtimes differ")
+    if set(parity_model.get("compared_categories", [])) != EXPECTED_CATEGORIES:
+        errors.append("runtime-parity.yaml categories differ")
     if registered != EXPECTED_RUNTIMES:
         errors.append(f"registered runtimes differ: {sorted(registered)}")
     if categories != EXPECTED_CATEGORIES:
@@ -54,12 +59,20 @@ def validate(root: Path) -> dict:
     for runtime_id in ("chatgpt_chat", "chatgpt_custom"):
         if candidates.get(runtime_id, {}).get("activate_by_default") is not True:
             errors.append(f"{runtime_id} must be active by default")
-    for runtime_id in ("claude_project", "opencode", "openai_plugin"):
+    for runtime_id in ("claude_project", "opencode"):
         item = candidates.get(runtime_id, {})
         if item.get("activate_by_default") is not False:
             errors.append(f"{runtime_id} must remain inactive")
         if item.get("suitability") != "reduced":
             errors.append(f"{runtime_id} must be assessed as reduced")
+    plugin = candidates.get("openai_plugin", {})
+    if plugin.get("activate_by_default") is not True:
+        errors.append("openai_plugin must be active")
+    if plugin.get("suitability") != "ready":
+        errors.append("openai_plugin must be ready")
+    plugin_model = parity_model.get("runtimes", {}).get("openai_plugin", {})
+    if plugin_model.get("active") is not True or plugin_model.get("suitability") != "ready":
+        errors.append("runtime-parity.yaml must mark openai_plugin ready/active")
 
     if cfg.get("runtime", {}).get("chat_zip", {}).get("enabled") is not True:
         errors.append("Chat ZIP must be enabled")
@@ -68,6 +81,7 @@ def validate(root: Path) -> dict:
 
     chat_build = root / "build" / "chat"
     custom_build = root / "build" / "custom-gpt"
+    plugin_build = root / "build" / "plugin"
     canonical = (root / cfg["instructions"]["canonical"]).read_text(encoding="utf-8")
     core_markers = list(cfg.get("instructions", {}).get("core_contract", {}).get("required_markers", []))
 
@@ -92,6 +106,7 @@ def validate(root: Path) -> dict:
     contracts = [
         (chat_build / "assistant" / "runtime-contract.json", "chatgpt_chat"),
         (custom_build / "builder" / "runtime-contract.json", "chatgpt_custom"),
+        (plugin_build / "runtime-contract.json", "openai_plugin"),
     ]
     for path, runtime_id in contracts:
         if not path.is_file():
@@ -104,15 +119,25 @@ def validate(root: Path) -> dict:
             if payload.get(key) != cfg.get(key):
                 errors.append(f"{runtime_id} {key} contract drift")
         adapter = payload.get("adapter", {})
-        if adapter.get("web_research_required") is not True:
-            errors.append(f"{runtime_id} must require web research")
-        if adapter.get("file_delivery_required") is not True:
-            errors.append(f"{runtime_id} must require file delivery")
+        if runtime_id in {"chatgpt_chat", "chatgpt_custom"}:
+            if adapter.get("web_research_required") is not True:
+                errors.append(f"{runtime_id} must require web research")
+            if adapter.get("file_delivery_required") is not True:
+                errors.append(f"{runtime_id} must require file delivery")
+        elif runtime_id == "openai_plugin":
+            for key in ("web_research", "filesystem_read", "filesystem_write", "code_execution", "persistent_state"):
+                if adapter.get(key) != "required_host_runtime":
+                    errors.append(f"openai_plugin missing required host capability: {key}")
+            if adapter.get("state_authority") != "workspace_file_when_present":
+                errors.append("openai_plugin state authority drift")
+            if adapter.get("mcp_generated") is not False or adapter.get("script_resources") != []:
+                errors.append("openai_plugin must not generate MCP or package scripts")
 
     chat_state = chat_build / "research-state.yaml"
     custom_state = custom_build / "builder" / "research-state.yaml"
     source_state = root / cfg["workspace_state"]["state"]["path"]
-    for path in (chat_state, custom_state):
+    plugin_state = plugin_build / "skills" / "marknadskartlaggaren" / "assets" / "research-state.yaml"
+    for path in (chat_state, custom_state, plugin_state):
         if not path.is_file():
             errors.append(f"missing research state template: {path.relative_to(root)}")
         elif path.read_bytes() != source_state.read_bytes():
@@ -122,8 +147,8 @@ def validate(root: Path) -> dict:
         "result": "PASS" if not errors else "FAIL",
         "registered_runtimes": sorted(registered),
         "compared_categories": sorted(categories),
-        "active_runtimes": ["chatgpt_chat", "chatgpt_custom"],
-        "assessed_inactive_runtimes": ["claude_project", "opencode", "openai_plugin"],
+        "active_runtimes": ["chatgpt_chat", "chatgpt_custom", "openai_plugin"],
+        "assessed_inactive_runtimes": ["claude_project", "opencode"],
         "errors": errors,
     }
 

@@ -39,4 +39,11 @@ python scripts/validate_instruction_adherence.py --project-root .
 
 ## GPT Byggaren 1.5
 
-Migreringen till GPT Byggaren 1.5.0 är klar och verifierad. Den inför plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt, strukturerad researchstatus och generaliserad runtime parity. Chat och Custom GPT är de aktiva runtimes som releasekedjan bygger och verifierar.
+Migreringen till GPT Byggaren 1.5.1 är klar och verifierad. Den inför plattformsneutrala capability-, artifact-, workspace/state- och tool-kontrakt, strukturerad researchstatus och generaliserad runtime parity. Chat och Custom GPT är de aktiva runtimes som releasekedjan bygger och verifierar.
+
+
+## OpenAI Plugin
+
+Projektet bygger även en skills-first OpenAI Plugin-distribution. Canonical instruktion och runtime policies paketeras i skillen, medan `research-state.yaml` och rapportmallen paketeras som assets.
+
+Full funktion kräver hostförmåga för aktuell webbresearch, skrivbar filyta, code execution och persistent state. Pluginen innehåller inga runtime-skript och genererar ingen MCP-wrapper.

@@ -51,7 +51,7 @@ def validate(root: Path) -> dict:
         delivery = json.loads(manifests[0].read_text(encoding="utf-8"))
         version = delivery.get("version")
         artifact_types = {item.get("type") for item in delivery.get("artifacts", [])}
-        for required in {"project_zip", "chat_zip", "custom_gpt_zip", "checksums"}:
+        for required in {"project_zip", "chat_zip", "custom_gpt_zip", "plugin_zip", "checksums"}:
             if required not in artifact_types:
                 errors.append(f"delivery manifest missing artifact type: {required}")
 
@@ -81,7 +81,7 @@ def validate(root: Path) -> dict:
         for item in cfg.get("analysis", {}).get("runtime", {}).get("candidates", [])
         if isinstance(item, dict) and item.get("runtime_id")
     }
-    for runtime_id in ("claude_project", "opencode", "openai_plugin"):
+    for runtime_id in ("claude_project", "opencode"):
         if candidates.get(runtime_id, {}).get("activate_by_default") is not False:
             errors.append(f"{runtime_id} unexpectedly active in release readiness")
 

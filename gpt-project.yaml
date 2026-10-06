@@ -28,9 +28,9 @@ analysis:
       activate_by_default: false
       reason: Workspace och lokal exekvering passar, men aktuell webbresearch och filslutleverans är miljöberoende.
     - runtime_id: openai_plugin
-      suitability: reduced
-      activate_by_default: false
-      reason: Skills och referenser kan paketeras men hela research-, state- och filgenereringsflödet realiseras inte av Plugin v1.
+      suitability: ready
+      activate_by_default: true
+      reason: Skills-first kan bära canonical researchmetodik, policies och state-template när hosten erbjuder webbresearch, skrivbar filyta, code execution och persistent state.
 
 model_robustness:
   level: stateful
@@ -195,6 +195,19 @@ runtime:
     enabled: true
     entrypoint: START-HERE.md
     start_here_template: build-templates/START-HERE.chat.md.tpl
+  openai_plugin:
+    enabled: true
+    role: peer_distribution
+    mode: skills_first
+    compatibility: ready_runtime_dependent
+    entrypoint: skills/marknadskartlaggaren/SKILL.md
+    web_dependency: required_host_runtime
+    filesystem_read: required_host_runtime
+    filesystem_write: required_host_runtime
+    code_execution: required_host_runtime
+    persistent_state: required_host_runtime
+    mcp_generated: false
+    script_resources: none
   custom_gpt:
     enabled: true
     instruction:
@@ -250,9 +263,10 @@ build:
   build_custom_gpt_zip: true
   build_claude_zip: false
   build_opencode_zip: false
-  build_plugin_zip: false
+  build_plugin_zip: true
 
 runtime_parity:
+  model: runtime-parity.yaml
   registered_runtimes:
   - chatgpt_chat
   - chatgpt_custom
